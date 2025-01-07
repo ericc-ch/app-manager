@@ -3,9 +3,10 @@
   "type": "module",
   "module": "src/index.ts",
   "scripts": {
-    "start": "bun run src/main.ts",
+    "build": "bun build ./src/main.ts --outfile ./dist/app-manager --compile --minify",
     "build:debug": "bun build ./src/main.ts --outfile ./dist/debug_app-manager --compile --sourcemap",
-    "build": "bun build ./src/main.ts --outfile ./dist/app-manager --compile --minify"
+    "deploy": "cp dist/app-manager ~/.local/bin/app-manager",
+    "start": "bun run src/main.ts"
   },
   "dependencies": {
     "citty": "^0.1.6",
