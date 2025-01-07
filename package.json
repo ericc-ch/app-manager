@@ -3,10 +3,15 @@
   "type": "module",
   "module": "src/index.ts",
   "scripts": {
-    "start": "bun run src/index.ts"
+    "start": "bun run src/main.ts",
+    "build:debug": "bun build ./src/main.ts --outfile ./dist/debug_app-manager --compile --sourcemap",
+    "build": "bun build ./src/main.ts --outfile ./dist/app-manager --compile --minify"
   },
   "dependencies": {
-    "citty": "^0.1.6"
+    "citty": "^0.1.6",
+    "consola": "^3.3.3",
+    "nano-spawn": "^0.2.0",
+    "ofetch": "^1.4.1"
   },
   "devDependencies": {
     "@echristian/eslint-config": "^0.0.13",
