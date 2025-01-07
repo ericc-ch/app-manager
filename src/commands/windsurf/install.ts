@@ -23,7 +23,7 @@ interface WindsurfLatestInfo {
 const URL_LATEST =
   "https://windsurf-stable.codeium.com/api/update/linux-x64/stable/latest"
 
-export async function updateWindsurf() {
+export async function installWindsurf() {
   ensureDirectory(WINDSURF_PATH.EXTRACT_DIRECTORY)
 
   const responseLatest = await ofetch<WindsurfLatestInfo>(URL_LATEST, {

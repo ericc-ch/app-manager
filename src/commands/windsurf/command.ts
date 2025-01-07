@@ -1,23 +1,32 @@
 import { defineCommand } from "citty"
 
-import { updateWindsurf } from "./update"
+import { deleteWindsurf } from "./delete"
+import { installWindsurf } from "./install"
 
-const update = defineCommand({
+const install = defineCommand({
   meta: {
-    name: "update",
-    description: "Update Windsurf",
+    name: "install",
+    description: "Download and install the latest version of Windsurf",
   },
-  run: () => {
-    return updateWindsurf()
+  run: installWindsurf,
+})
+
+// Cannot name a variable "delete", reserved keyword
+const _delete = defineCommand({
+  meta: {
+    name: "delete",
+    description: "Delete Windsurf installation",
   },
+  run: deleteWindsurf,
 })
 
 export const windsurf = defineCommand({
   meta: {
     name: "Windsurf",
-    description: "Update / uninstall Windsurf",
+    description: "Install / uninstall Windsurf",
   },
   subCommands: {
-    update,
+    install,
+    delete: _delete,
   },
 })
