@@ -38,7 +38,6 @@ const URL_LATEST =
   "https://windsurf-stable.codeium.com/api/update/linux-x64/stable/latest"
 
 export async function updateWindsurf() {
-  consola.start("Getting latest Windsurf version")
   const responseLatest = await ofetch<WindsurfLatestInfo>(URL_LATEST, {
     method: "GET",
   })
@@ -57,7 +56,6 @@ export async function updateWindsurf() {
   await Bun.write(PATH_DOWNLOAD, blob)
   consola.success(`Windsurf downloaded to ${PATH_DOWNLOAD}`)
 
-  consola.start(`Extracting Windsurf to ${PATH_EXTRACTED}`)
   await extractTar({
     source: PATH_DOWNLOAD,
     target: PATH_EXTRACTED,
@@ -69,4 +67,7 @@ export async function updateWindsurf() {
     target: PATH_WINDSURF_LINK,
   })
   consola.success(`Symlink created for Windsurf at ${PATH_WINDSURF_LINK}`)
+
+  fs.rmSync(PATH_DOWNLOAD)
+  consola.info(`Cleaned up ${PATH_DOWNLOAD}`)
 }
