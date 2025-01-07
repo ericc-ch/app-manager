@@ -1,0 +1,19 @@
+{
+  "name": "app-manager",
+  "type": "module",
+  "module": "src/index.ts",
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
+  "dependencies": {
+    "citty": "^0.1.6"
+  },
+  "devDependencies": {
+    "@echristian/eslint-config": "^0.0.13",
+    "@types/bun": "latest",
+    "eslint": "^9.17.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
