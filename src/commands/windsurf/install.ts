@@ -1,10 +1,7 @@
 import consola from "consola"
-import fs from "node:fs"
 import { ofetch } from "ofetch"
 
 import { ensureDirectory } from "~/lib/fs"
-import { createSymlink } from "~/lib/symlink"
-import { extractTar } from "~/lib/tar"
 
 import { WINDSURF_PATH } from "./variables"
 
@@ -23,7 +20,13 @@ interface WindsurfLatestInfo {
 const URL_LATEST =
   "https://windsurf-stable.codeium.com/api/update/linux-x64/stable/latest"
 
-export async function installWindsurf() {
+interface InstallWindsurfOptions {
+  "no-download"?: boolean
+}
+
+export async function installWindsurf({
+  "no-download": noDownload,
+}: InstallWindsurfOptions) {
   ensureDirectory(WINDSURF_PATH.EXTRACT_DIRECTORY)
 
   const responseLatest = await ofetch<WindsurfLatestInfo>(URL_LATEST, {
@@ -34,32 +37,39 @@ export async function installWindsurf() {
     `Latest Windsurf version found: ${responseLatest.windsurfVersion}`,
   )
 
-  consola.start("Downloading Windsurf")
-  const responseDownload = await fetch(responseLatest.url, {
-    method: "GET",
-  })
+  consola.info({ noDownload })
 
-  const blob = await responseDownload.blob()
+  if (noDownload) {
+    consola.info("no-download flag is set, skipping download")
+    return
+  }
 
-  await Bun.write(WINDSURF_PATH.DOWNLOAD_DESTINATION, blob)
-  consola.success(
-    `Windsurf downloaded to ${WINDSURF_PATH.DOWNLOAD_DESTINATION}`,
-  )
+  // consola.start("Downloading Windsurf")
+  // const responseDownload = await fetch(responseLatest.url, {
+  //   method: "GET",
+  // })
 
-  await extractTar({
-    source: WINDSURF_PATH.DOWNLOAD_DESTINATION,
-    target: WINDSURF_PATH.EXTRACT_DIRECTORY,
-  })
-  consola.success(`Windsurf extracted to ${WINDSURF_PATH.EXTRACT_DIRECTORY}`)
+  // const blob = await responseDownload.blob()
 
-  createSymlink({
-    source: WINDSURF_PATH.WINDSURF_BIN,
-    target: WINDSURF_PATH.WINDSURF_LINK,
-  })
-  consola.success(
-    `Symlink created for Windsurf at ${WINDSURF_PATH.WINDSURF_LINK}`,
-  )
+  // await Bun.write(WINDSURF_PATH.DOWNLOAD_DESTINATION, blob)
+  // consola.success(
+  //   `Windsurf downloaded to ${WINDSURF_PATH.DOWNLOAD_DESTINATION}`,
+  // )
 
-  fs.rmSync(WINDSURF_PATH.DOWNLOAD_DESTINATION)
-  consola.info(`Cleaned up ${WINDSURF_PATH.DOWNLOAD_DESTINATION}`)
+  // await extractTar({
+  //   source: WINDSURF_PATH.DOWNLOAD_DESTINATION,
+  //   target: WINDSURF_PATH.EXTRACT_DIRECTORY,
+  // })
+  // consola.success(`Windsurf extracted to ${WINDSURF_PATH.EXTRACT_DIRECTORY}`)
+
+  // createSymlink({
+  //   source: WINDSURF_PATH.WINDSURF_BIN,
+  //   target: WINDSURF_PATH.WINDSURF_LINK,
+  // })
+  // consola.success(
+  //   `Symlink created for Windsurf at ${WINDSURF_PATH.WINDSURF_LINK}`,
+  // )
+
+  // fs.rmSync(WINDSURF_PATH.DOWNLOAD_DESTINATION)
+  // consola.info(`Cleaned up ${WINDSURF_PATH.DOWNLOAD_DESTINATION}`)
 }

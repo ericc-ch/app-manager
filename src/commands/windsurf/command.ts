@@ -6,9 +6,16 @@ import { installWindsurf } from "./install"
 const install = defineCommand({
   meta: {
     name: "install",
-    description: "Download and install the latest version of Windsurf",
+    description: "Install the latest version of Windsurf",
   },
-  run: installWindsurf,
+  args: {
+    "no-download": {
+      type: "boolean",
+      description: "Do not download windsurf, check only the latest version",
+      default: false,
+    },
+  },
+  run: ({ args }) => installWindsurf(args),
 })
 
 // Cannot name a variable "delete", reserved keyword
