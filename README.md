@@ -1,15 +1,21 @@
-# windsurf-updater
+# App Manager
 
-To install dependencies:
+## Overview
 
-```bash
-bun install
-```
+`app-manager` is a command-line tool designed to manage my installed applications. It provides commands to install and delete applications, currently only supports Windsurf.
 
-To run:
+### Why
 
-```bash
-bun run src/index.ts
-```
+Windsurf is currently not officially available for Arch based distros. An AUR package exists, but currently it's not popular and I don't want to read the PKGBUILD everytime I want to install Windsurf.
 
-This project was created using `bun init` in bun v1.1.42. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+### Features
+
+- Install Windsurf: Downloads and installs the latest version of Windsurf.
+- Delete Windsurf: Deletes the Windsurf installation.
+
+### Usage
+
+To use `app-manager`, run the following commands:
+
+- `app-manager windsurf install`: Installs Windsurf.
+- `app-manager windsurf delete`: Deletes Windsurf.
