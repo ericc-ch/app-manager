@@ -1,7 +1,7 @@
 import { defineCommand } from "citty"
 
-import { deleteWindsurf } from "./delete"
 import { installWindsurf } from "./install"
+import { uninstallWindsurf } from "./uninstall"
 
 const install = defineCommand({
   meta: {
@@ -19,13 +19,12 @@ const install = defineCommand({
   run: ({ args }) => installWindsurf(args),
 })
 
-// Cannot name a variable "delete", reserved keyword
-const _delete = defineCommand({
+const uninstall = defineCommand({
   meta: {
-    name: "delete",
+    name: "uninstall",
     description: "Delete Windsurf installation",
   },
-  run: deleteWindsurf,
+  run: uninstallWindsurf,
 })
 
 export const windsurf = defineCommand({
@@ -35,6 +34,6 @@ export const windsurf = defineCommand({
   },
   subCommands: {
     install,
-    delete: _delete,
+    uninstall,
   },
 })
