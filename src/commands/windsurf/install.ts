@@ -34,8 +34,6 @@ export async function installWindsurf({ download }: InstallWindsurfOptions) {
     method: "GET",
   })
 
-  consola.log(responseLatest)
-
   consola.success(
     `Latest Windsurf version found: ${responseLatest.windsurfVersion}`,
   )
