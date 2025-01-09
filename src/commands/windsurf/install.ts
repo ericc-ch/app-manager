@@ -1,7 +1,10 @@
 import consola from "consola"
+import fs from "node:fs"
 import { ofetch } from "ofetch"
 
 import { ensureDirectory } from "~/lib/fs"
+import { createSymlink } from "~/lib/symlink"
+import { extractTar } from "~/lib/tar"
 
 import { WINDSURF_PATH } from "./variables"
 
@@ -33,6 +36,8 @@ export async function installWindsurf({
     method: "GET",
   })
 
+  consola.log(responseLatest)
+
   consola.success(
     `Latest Windsurf version found: ${responseLatest.windsurfVersion}`,
   )
@@ -44,32 +49,32 @@ export async function installWindsurf({
     return
   }
 
-  // consola.start("Downloading Windsurf")
-  // const responseDownload = await fetch(responseLatest.url, {
-  //   method: "GET",
-  // })
+  consola.start("Downloading Windsurf")
+  const responseDownload = await fetch(responseLatest.url, {
+    method: "GET",
+  })
 
-  // const blob = await responseDownload.blob()
+  const blob = await responseDownload.blob()
 
-  // await Bun.write(WINDSURF_PATH.DOWNLOAD_DESTINATION, blob)
-  // consola.success(
-  //   `Windsurf downloaded to ${WINDSURF_PATH.DOWNLOAD_DESTINATION}`,
-  // )
+  await Bun.write(WINDSURF_PATH.DOWNLOAD_DESTINATION, blob)
+  consola.success(
+    `Windsurf downloaded to ${WINDSURF_PATH.DOWNLOAD_DESTINATION}`,
+  )
 
-  // await extractTar({
-  //   source: WINDSURF_PATH.DOWNLOAD_DESTINATION,
-  //   target: WINDSURF_PATH.EXTRACT_DIRECTORY,
-  // })
-  // consola.success(`Windsurf extracted to ${WINDSURF_PATH.EXTRACT_DIRECTORY}`)
+  await extractTar({
+    source: WINDSURF_PATH.DOWNLOAD_DESTINATION,
+    target: WINDSURF_PATH.EXTRACT_DIRECTORY,
+  })
+  consola.success(`Windsurf extracted to ${WINDSURF_PATH.EXTRACT_DIRECTORY}`)
 
-  // createSymlink({
-  //   source: WINDSURF_PATH.WINDSURF_BIN,
-  //   target: WINDSURF_PATH.WINDSURF_LINK,
-  // })
-  // consola.success(
-  //   `Symlink created for Windsurf at ${WINDSURF_PATH.WINDSURF_LINK}`,
-  // )
+  createSymlink({
+    source: WINDSURF_PATH.WINDSURF_BIN,
+    target: WINDSURF_PATH.WINDSURF_LINK,
+  })
+  consola.success(
+    `Symlink created for Windsurf at ${WINDSURF_PATH.WINDSURF_LINK}`,
+  )
 
-  // fs.rmSync(WINDSURF_PATH.DOWNLOAD_DESTINATION)
-  // consola.info(`Cleaned up ${WINDSURF_PATH.DOWNLOAD_DESTINATION}`)
+  fs.rmSync(WINDSURF_PATH.DOWNLOAD_DESTINATION)
+  consola.info(`Cleaned up ${WINDSURF_PATH.DOWNLOAD_DESTINATION}`)
 }

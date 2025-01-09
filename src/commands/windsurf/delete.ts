@@ -9,13 +9,13 @@ export function deleteWindsurf() {
     return
   }
 
-  if (!fs.existsSync(WINDSURF_PATH.WINDSURF_BIN)) {
-    consola.warn("Windsurf binary is not found")
+  if (!fs.existsSync(WINDSURF_PATH.WINDSURF_DIR)) {
+    consola.warn("Windsurf directory is not found")
     return
   }
 
   consola.start("Deleting Windsurf")
   fs.rmSync(WINDSURF_PATH.WINDSURF_LINK)
-  fs.rmSync(WINDSURF_PATH.WINDSURF_BIN)
+  fs.rmSync(WINDSURF_PATH.WINDSURF_DIR)
   consola.success("Windsurf deleted")
 }
