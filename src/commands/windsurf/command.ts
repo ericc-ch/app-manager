@@ -1,4 +1,5 @@
 import { defineCommand } from "citty"
+import { Command } from "commander"
 
 import { deleteWindsurf } from "./delete"
 import { installWindsurf } from "./install"
@@ -37,3 +38,7 @@ export const windsurf = defineCommand({
     delete: _delete,
   },
 })
+
+export const _install = new Command()
+
+_install.option("-n, --no-download", "Do not download windsurf")

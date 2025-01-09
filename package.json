@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "citty": "^0.1.6",
+    "commander": "^13.0.0",
     "consola": "^3.3.3",
     "nano-spawn": "^0.2.0",
     "ofetch": "^1.4.1"
