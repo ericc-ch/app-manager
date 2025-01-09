@@ -1,5 +1,4 @@
 import { defineCommand } from "citty"
-import { Command } from "commander"
 
 import { deleteWindsurf } from "./delete"
 import { installWindsurf } from "./install"
@@ -10,10 +9,11 @@ const install = defineCommand({
     description: "Install the latest version of Windsurf",
   },
   args: {
-    "no-download": {
+    // https://github.com/unjs/citty/issues/176
+    download: {
       type: "boolean",
       description: "Do not download windsurf, check only the latest version",
-      default: false,
+      default: true,
     },
   },
   run: ({ args }) => installWindsurf(args),
@@ -30,7 +30,7 @@ const _delete = defineCommand({
 
 export const windsurf = defineCommand({
   meta: {
-    name: "Windsurf",
+    name: "windsurf",
     description: "Install / uninstall Windsurf",
   },
   subCommands: {
@@ -38,7 +38,3 @@ export const windsurf = defineCommand({
     delete: _delete,
   },
 })
-
-export const _install = new Command()
-
-_install.option("-n, --no-download", "Do not download windsurf")

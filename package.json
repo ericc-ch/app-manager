@@ -6,11 +6,11 @@
     "build": "bun build ./src/main.ts --outfile ./dist/app-manager --compile --minify",
     "build:debug": "bun build ./src/main.ts --outfile ./dist/debug_app-manager --compile --sourcemap",
     "deploy": "cp dist/app-manager ~/.local/bin/app-manager",
+    "lint": "eslint .",
     "start": "bun run src/main.ts"
   },
   "dependencies": {
     "citty": "^0.1.6",
-    "commander": "^13.0.0",
     "consola": "^3.3.3",
     "nano-spawn": "^0.2.0",
     "ofetch": "^1.4.1"

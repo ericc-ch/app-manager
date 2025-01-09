@@ -24,12 +24,10 @@ const URL_LATEST =
   "https://windsurf-stable.codeium.com/api/update/linux-x64/stable/latest"
 
 interface InstallWindsurfOptions {
-  "no-download"?: boolean
+  download?: boolean
 }
 
-export async function installWindsurf({
-  "no-download": noDownload,
-}: InstallWindsurfOptions) {
+export async function installWindsurf({ download }: InstallWindsurfOptions) {
   ensureDirectory(WINDSURF_PATH.EXTRACT_DIRECTORY)
 
   const responseLatest = await ofetch<WindsurfLatestInfo>(URL_LATEST, {
@@ -42,9 +40,9 @@ export async function installWindsurf({
     `Latest Windsurf version found: ${responseLatest.windsurfVersion}`,
   )
 
-  consola.info({ noDownload })
+  consola.info({ download })
 
-  if (noDownload) {
+  if (!download) {
     consola.info("no-download flag is set, skipping download")
     return
   }
