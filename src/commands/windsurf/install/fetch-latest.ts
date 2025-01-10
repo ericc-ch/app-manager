@@ -1,6 +1,6 @@
 import consola from "consola"
-import { Effect } from "effect"
-import { ofetch } from "ofetch"
+import { Data, Effect } from "effect"
+import { FetchError, ofetch } from "ofetch"
 
 interface WindsurfLatestInfo {
   url: string
@@ -17,16 +17,21 @@ interface WindsurfLatestInfo {
 const URL_LATEST =
   "https://windsurf-stable.codeium.com/api/update/linux-x64/stable/latest"
 
-export const fetchLatestVersion = Effect.gen(function* () {
-  const responseLatest = yield* Effect.tryPromise(() =>
-    ofetch<WindsurfLatestInfo>(URL_LATEST, {
-      method: "GET",
-    }),
-  )
+class HttpError extends Data.TaggedError("HttpError")<{
+  cause: FetchError
+}> {}
 
-  consola.success(
-    `Latest Windsurf version found: ${responseLatest.windsurfVersion}`,
-  )
+const fetchFn = () =>
+  ofetch<WindsurfLatestInfo>(URL_LATEST, {
+    method: "GET",
+  })
 
-  return responseLatest
-})
+const log = (info: WindsurfLatestInfo) => {
+  consola.success(`Latest Windsurf version found: ${info.windsurfVersion}`)
+}
+
+export const fetchLatestVersion = () =>
+  Effect.tryPromise({
+    try: fetchFn,
+    catch: (cause) => new HttpError({ cause: cause as FetchError }),
+  }).pipe(Effect.tap(log))
