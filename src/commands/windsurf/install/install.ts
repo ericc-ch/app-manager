@@ -6,7 +6,7 @@ import { ensureDirectory } from "~/lib/fs"
 import { createSymlink } from "~/lib/symlink"
 import { extractTar } from "~/lib/tar"
 
-import { WINDSURF_PATH } from "./variables"
+import { WINDSURF_PATH } from "../variables"
 
 interface WindsurfLatestInfo {
   url: string

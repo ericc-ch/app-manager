@@ -1,7 +1,10 @@
-import fs from "node:fs"
+import { Data, Effect } from "effect"
+import fs from "node:fs/promises"
 
-export function ensureDirectory(directory: string) {
-  if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory)
-  }
-}
+class FileError extends Data.TaggedError("FileError") {}
+
+export const ensureDirectory = (directory: string) =>
+  Effect.tryPromise({
+    try: () => fs.mkdir(directory, { recursive: true }),
+    catch: () => new FileError(),
+  })

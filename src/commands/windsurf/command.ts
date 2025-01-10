@@ -1,6 +1,6 @@
 import { defineCommand } from "citty"
 
-import { installWindsurf } from "./install"
+import { installWindsurf } from "./install/install"
 import { uninstallWindsurf } from "./uninstall"
 
 const install = defineCommand({
