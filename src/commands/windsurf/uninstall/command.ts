@@ -1,7 +1,7 @@
 import consola from "consola"
 import fs from "node:fs"
 
-import { WINDSURF_PATH } from "./variables"
+import { WINDSURF_PATH } from "../variables"
 
 export function uninstallWindsurf() {
   if (!fs.existsSync(WINDSURF_PATH.WINDSURF_LINK)) {
